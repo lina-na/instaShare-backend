@@ -1,0 +1,22 @@
+# migration configmigration-config
+sequelize-config.json
+
+# Node packages
+/node_modules
+
+# files from email
+/uploads
+
+# Configuration files
+*.env
+
+# IDEs/editors
+.idea
+*.sublime-project
+
+# Temporary files
+*.log
+*.todo
+/tmp
+.~lock*
+*/.DS_Store
