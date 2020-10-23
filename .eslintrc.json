@@ -1,0 +1,17 @@
+{
+  "extends": "google",
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "rules": {
+    "max-len": ["error", 140],
+    "one-var": "off",
+    "new-cap": "off",
+    "space-before-function-paren": "off",
+    "comma-dangle": "off",
+    "arrow-parens": "off",
+    "no-trailing-spaces": "off",
+    "no-var": "off"
+  }
+}
