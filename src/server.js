@@ -1,6 +1,6 @@
 require('dotenv').load({path: process.env.DOTENV || '.env'});
 const database = require('./database');
-
+const errors = require('./errors');
 const express = require('express');
 const cron = require('cron');
 const cors = require('cors');
@@ -8,6 +8,12 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const klawSync = require('klaw-sync');
 const config = require('config');
+const crypto = require('crypto');
+
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
 const app = express();
 
 jobs = {};
@@ -16,9 +22,57 @@ const pathToJobs = root + '/jobs';
 
 /* globals */
 models = require('./database').models;
+app.use(bodyParser.json());
 
+app.set('view engine', 'ejs');
+app.get('/', (req, res) => {
+    res.render('index');
+});
 app.set('models', database.models);
 app.set('mongoСlient', database.mongoСlient);
+
+
+// const storage = new GridFsStorage({
+//     url: process.env.DB_CONNECT,
+//     file: (req, file) => {
+//       return new Promise((resolve, reject) => {
+//         crypto.randomBytes(16, (err, buf) => {
+//           if (err) {
+//             return reject(err);
+//           }
+//           const filename = buf.toString('hex') + path.extname(file.originalname);
+//           const fileInfo = {
+//             filename: filename,
+//             bucketName: 'files'
+//           };
+//           resolve(fileInfo);
+//         });
+//       });
+//     }
+//   });
+//   const upload = multer({storage});
+
+//   app.post('/upload', upload.single('file'), async (req, res) => {
+//     // errors.wrap(async (req, res) => {
+//       const models = res.app.get('models');
+//       const fileData = req.file;
+//       let file;
+//       if (fileData) {
+//         // fileData = {
+
+//         // }
+//       try {
+//         file = await models.File.create(fileData);
+//       } catch (err) {
+//           console.log(err);
+//       }
+//       }
+      
+  
+//     res.json({file: fileData});
+//     // });
+//     // res.redirect('/');
+//   });
 
 /* configure logger */
 configureLogger();
