@@ -4,8 +4,8 @@ sequelize-config.json
 # Node packages
 /node_modules
 
-# files from email
-/uploads
+# files from user
+/public
 
 # Configuration files
 *.env

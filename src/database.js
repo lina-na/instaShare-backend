@@ -19,14 +19,6 @@ const mongoСlient = mongoose.connect(process.env.DB_CONNECT, {
 
 Grid.mongo = mongoose.mongo;
 
-var conn = mongoose.createConnection(`${process.env.DB_CONNECT}`);
-
-// conn.once('open', function () {
-//   let gfs = Grid(conn.db);
-//   gfs.collection('files');
-//   // all set!
-// })
-
 mongoose.set('debug', true); // enabling debugging information to be printed to the console for debugging purposes
 modelsPaths.forEach((file) => {
     if (!require(path.resolve(__dirname, file.path))) return;

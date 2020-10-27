@@ -31,49 +31,6 @@ app.get('/', (req, res) => {
 app.set('models', database.models);
 app.set('mongoСlient', database.mongoСlient);
 
-
-// const storage = new GridFsStorage({
-//     url: process.env.DB_CONNECT,
-//     file: (req, file) => {
-//       return new Promise((resolve, reject) => {
-//         crypto.randomBytes(16, (err, buf) => {
-//           if (err) {
-//             return reject(err);
-//           }
-//           const filename = buf.toString('hex') + path.extname(file.originalname);
-//           const fileInfo = {
-//             filename: filename,
-//             bucketName: 'files'
-//           };
-//           resolve(fileInfo);
-//         });
-//       });
-//     }
-//   });
-//   const upload = multer({storage});
-
-//   app.post('/upload', upload.single('file'), async (req, res) => {
-//     // errors.wrap(async (req, res) => {
-//       const models = res.app.get('models');
-//       const fileData = req.file;
-//       let file;
-//       if (fileData) {
-//         // fileData = {
-
-//         // }
-//       try {
-//         file = await models.File.create(fileData);
-//       } catch (err) {
-//           console.log(err);
-//       }
-//       }
-      
-  
-//     res.json({file: fileData});
-//     // });
-//     // res.redirect('/');
-//   });
-
 /* configure logger */
 configureLogger();
 

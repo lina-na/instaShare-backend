@@ -26,7 +26,6 @@ let User = new mongoose.Schema({
  {timestamps: true}, );
 
 User.statics.generateToken =  (user) => {
-  console.log("user",user);
     const token = jwt.sign({id: user._id}, process.env.SALT);
     return token;
 };
@@ -34,7 +33,6 @@ User.statics.generateToken =  (user) => {
 User.statics.authenticate = async (res, email, password) => {
     try {
         const user = await User.findOne({email: email.toLowerCase()});
-        console.log(user, 'AAAAAAAAAA');
         if (!user) {
             throw errors.InvalidInputError('Wrong email or password');
             // res.status(401).send('Wrong login or pass');
@@ -53,6 +51,5 @@ User.statics.authenticate = async (res, email, password) => {
         // res.status(404).send('smth s went wrong');
     }
 };
-console.log("User.generateToken", User.generateToken);
 User = mongoose.model('User', User);
 module.exports = User;

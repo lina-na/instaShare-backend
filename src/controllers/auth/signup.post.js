@@ -10,7 +10,7 @@ router.post('/signup',
 		userData.email = userData.email && userData.email.toLowerCase();
         const user = await models.User.create(userData);
         if (!user) throw errors.NotFoundError('User not created, invalid or missing credentials');
-        const token = await user.generateToken(user);
+        const token = models.User.generateToken(user);
         user.password = undefined;
         return res.json({
             user: user,

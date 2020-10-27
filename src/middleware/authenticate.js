@@ -15,7 +15,8 @@ module.exports = function authenticate() {
             throw errors.UnauthorizedError(err.name);
         }
 
-        const user = await models.User.findById(payload.userId);
+        const user = await models.User.findById(payload.id);
+        console.log(payload, 'aaaaa');
         if (!user) throw errors.UnauthorizedError('User not found');
 
         res.locals.user = user;

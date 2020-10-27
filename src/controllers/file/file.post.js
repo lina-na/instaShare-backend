@@ -2,9 +2,8 @@
 const errors = require('../../errors');
 const router = require('express').Router();
 const multer = require('multer');
-const mongoose = require('mongoose');
 const uuidv4 = require('uuid/v4');
-const a =require('./');
+const authenticate = require('../../middleware/authenticate');
 
 const DIR = './public/';
 
@@ -18,7 +17,7 @@ const storage = multer.diskStorage({
     }
 });
 
-var upload = multer({
+let upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
         if (file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg') {
@@ -32,14 +31,18 @@ var upload = multer({
 
 // User model
 
+
 router.post('/upload', upload.single('file'),
+    authenticate(),
     errors.wrap(async (req, res) => {
+        const url = req.protocol + '://' + req.get('host')
         const models = res.app.get('models');
         let fileData = {
            file_path: url + '/public/' + req.file.filename,
-           file_type: req.file.contentType,
-           originalname: req.file.filename,
-           ower_id: '1',
+           file_type: req.file.mimetype,
+           original_name: req.file.originalname,
+           owner_id: res.locals.user.id,
+           file_name: req.file.filename,
         };
         const file = await models.File.create(fileData);
         if (!file) throw errors.NotFoundError('Can not create file');
