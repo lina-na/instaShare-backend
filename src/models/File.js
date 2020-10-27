@@ -29,6 +29,15 @@ let File = new mongoose.Schema({
       type: String,
       default: '',
       required: true,  
+    },
+    storage_used: {
+        type: String,
+        default: '',
+        required: true,
+    },
+    is_deleted: {
+        type: Boolean,
+        default: false,
     }
 }, {collection: 'files'});
 

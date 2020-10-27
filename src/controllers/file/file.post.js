@@ -37,14 +37,20 @@ router.post('/upload', upload.single('file'),
     errors.wrap(async (req, res) => {
         const url = req.protocol + '://' + req.get('host')
         const models = res.app.get('models');
+        let file;
+        if (req.file) {
+    // fileSize in Kb
+        const fileSize = (req.file.size * 0.0009765625).toFixed(2)
         let fileData = {
            file_path: url + '/public/' + req.file.filename,
            file_type: req.file.mimetype,
            original_name: req.file.originalname,
            owner_id: res.locals.user.id,
            file_name: req.file.filename,
+           storage_used: fileSize
         };
         const file = await models.File.create(fileData);
+    }
         if (!file) throw errors.NotFoundError('Can not create file');
         return res.json({
             file: file,
