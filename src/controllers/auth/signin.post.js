@@ -7,8 +7,6 @@ router.post(
 	errors.wrap(async (req, res) => {
 		const {email, password} = req.body;
 		const models = res.app.get('models');
-		console.log(models, 'HALLLOOOOO');
-		console.log(req.body, 'BODY');
 		let user;
 		try {
 			user = await models.User.authenticate(res, email, password);

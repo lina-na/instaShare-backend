@@ -2,13 +2,13 @@ const authenticate = require('../../middleware/authenticate');
 const errors = require('../../errors');
 const router = require('express').Router();
 
-router.get('/user/:id',
+router.delete('/file/:id',
     authenticate(),
     errors.wrap(async (req, res) => {
         const models = res.app.get('models');
-        const user = await models.User.findById(req.params.id);
-        if (!user) throw errors.NotFoundError('user not found');
-        res.json(user);
+        const fileDelete = await models.File.findOneAndUpdate({_id: req.params.id}, {is_deleted: true});
+        if (!fileDelete) throw errors.NotFoundError('File is not deleting');
+        res.json(fileDelete);
     })
 );
 

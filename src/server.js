@@ -1,6 +1,6 @@
 require('dotenv').load({path: process.env.DOTENV || '.env'});
 const database = require('./database');
-
+const errors = require('./errors');
 const express = require('express');
 const cron = require('cron');
 const cors = require('cors');
@@ -8,6 +8,12 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const klawSync = require('klaw-sync');
 const config = require('config');
+const crypto = require('crypto');
+
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
 const app = express();
 
 jobs = {};
@@ -16,7 +22,12 @@ const pathToJobs = root + '/jobs';
 
 /* globals */
 models = require('./database').models;
+app.use(bodyParser.json());
 
+app.set('view engine', 'ejs');
+app.get('/', (req, res) => {
+    res.render('index');
+});
 app.set('models', database.models);
 app.set('mongoСlient', database.mongoСlient);
 

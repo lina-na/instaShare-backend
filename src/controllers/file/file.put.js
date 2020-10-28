@@ -2,13 +2,15 @@ const authenticate = require('../../middleware/authenticate');
 const errors = require('../../errors');
 const router = require('express').Router();
 
-router.get('/user/:id',
+router.put('/file',
     authenticate(),
     errors.wrap(async (req, res) => {
         const models = res.app.get('models');
-        const user = await models.User.findById(req.params.id);
-        if (!user) throw errors.NotFoundError('user not found');
-        res.json(user);
+        const {id, fileName} = req.body;
+        
+        const fileChange = await models.File.findOneAndUpdate({_id: id}, {original_name: fileName});
+        if (!fileChange) throw errors.NotFoundError('File is not changing');
+        res.json(fileChange);
     })
 );
 
