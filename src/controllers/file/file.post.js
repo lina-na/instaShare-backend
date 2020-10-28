@@ -49,7 +49,7 @@ router.post('/upload', upload.single('file'),
            file_name: req.file.filename,
            storage_used: fileSize
         };
-        const file = await models.File.create(fileData);
+        file = await models.File.create(fileData);
     }
         if (!file) throw errors.NotFoundError('Can not create file');
         return res.json({
